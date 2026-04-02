@@ -1,0 +1,29 @@
+{
+  "name": "resume_analyzer",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000R\u0000e\u0000s\u0000u\u0000m\u0000e\u0000_\u0000A\u0000n\u0000a\u0000l\u0000y\u0000z\u0000e\u0000r\u0000\r\u0000 \u0000",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harsh-X-dev/Resume_Analyzer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Harsh-X-dev/Resume_Analyzer/issues"
+  },
+  "homepage": "https://github.com/Harsh-X-dev/Resume_Analyzer#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3"
+  }
+}
