@@ -93,3 +93,15 @@ export const logoutUserController = async (req, res) => {
     message: "User logged out successfully",
   });
 };
+
+export const getMeController = async (req, res) => {
+  const user = await UserModel.findById(req.user.id);
+  res.status(200).json({
+    message: "found user details",
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    },
+  });
+};
