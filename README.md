@@ -1,4 +1,4 @@
-# Resume Analyzer
+# Prep AI
 
 > A full-stack Resume Analyzer web application that uses AI to analyze resumes and generate interview reports.
 
