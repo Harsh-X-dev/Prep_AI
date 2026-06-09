@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useDash } from "../hooks/useDash";
 import { UploadCloud, Sparkles } from "lucide-react";
+import { Loading } from "../../../component/loading";
 
 export const Home = () => {
   const [data, setData] = useState({});
@@ -10,9 +11,7 @@ export const Home = () => {
 
   if (loading) {
     return (
-      <div className="h-full flex items-center justify-center">
-        <h1 className="text-xl font-medium text-gray-500">Loading.....</h1>
-      </div>
+     <Loading/>
     );
   }
 

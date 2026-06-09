@@ -10,6 +10,7 @@ import {
   Target,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Loading } from "../../../component/loading";
 
 export function ReportDetail() {
   const { id } = useParams();
@@ -25,9 +26,7 @@ export function ReportDetail() {
 
   if (loading) {
     return (
-      <div className="h-full flex items-center justify-center bg-[#f8fafc]">
-        <h1 className="text-xl font-medium text-gray-500">Loading.....</h1>
-      </div>
+      <Loading/>
     );
   }
 

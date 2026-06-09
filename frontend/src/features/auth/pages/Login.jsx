@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate,Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
+import { Loading } from "../../../component/loading.jsx";
 const Login = () => {
   const { handleLoginUser, loading, user } = useAuth();
 
@@ -12,7 +12,7 @@ const Login = () => {
   });
 
   if (loading) {
-    return <h1>Loading......</h1>;
+    return <Loading />;
   }
 
   if (user) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate,Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
+import { Loading } from "../../../component/loading.jsx";
 const Register = () => {
   const { handleRegisterUser, loading, user } = useAuth();
   const [data, setData] = useState({
@@ -11,7 +11,7 @@ const Register = () => {
   });
 
   if (loading) {
-    return <h1>Loading......</h1>;
+    return <Loading />;
   }
   if (user) {
     return <Navigate to="/home" />;
