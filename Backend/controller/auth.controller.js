@@ -5,15 +5,23 @@ import UserModel from "../models/user.model.js";
 import blacklistTokenModel from "../models/blacklist.model.js";
 
 const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, process.env.JWT_EXPIRES);
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
+};
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: true, // Required on HTTPS (Render/Vercel)
+  sameSite: "none", // Required for cross-site cookies
 };
 
 export const registerUserController = async (req, res) => {
   const { email, password, username } = req.body;
 
   if (!email || !password || !username) {
-    res.status(400).json({
-      message: "please provide username, eamil and password",
+    return res.status(400).json({
+      message: "Please provide username, email and password",
     });
   }
 
@@ -22,8 +30,8 @@ export const registerUserController = async (req, res) => {
   });
 
   if (isUserAlreadyExist) {
-    res.status(400).json({
-      message: "Account already exists with this username or emailAddress ",
+    return res.status(400).json({
+      message: "Account already exists with this username or email",
     });
   }
 
@@ -37,19 +45,20 @@ export const registerUserController = async (req, res) => {
 
   const token = signToken(user._id);
 
-  res.cookie("token", token);
+  res.cookie("token", token, cookieOptions);
 
-  res.status(201).json({
-    message: "User registerd successfully",
+  return res.status(201).json({
+    message: "User registered successfully",
     user,
   });
 };
 
 export const loginUserController = async (req, res) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
     return res.status(400).json({
-      message: " please provide email and password. ",
+      message: "Please provide email and password",
     });
   }
 
@@ -57,47 +66,56 @@ export const loginUserController = async (req, res) => {
 
   if (!user) {
     return res.status(400).json({
-      message:
-        "cant find user with these creadentials invalid email or password.",
+      message: "Invalid email or password",
     });
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(
+    password,
+    user.password
+  );
 
   if (!isPasswordValid) {
     return res.status(400).json({
-      message:
-        "cant find user with these creadentials invalid email or password.",
+      message: "Invalid email or password",
     });
   }
 
   const token = signToken(user._id);
 
-  res.cookie("token", token);
+  res.cookie("token", token, cookieOptions);
 
-  res.status(201).json({
-    message: "User logged IN successfully",
+  return res.status(200).json({
+    message: "User logged in successfully",
     user,
   });
 };
 
 export const logoutUserController = async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.cookies?.token;
+
   if (token) {
     await blacklistTokenModel.create({ token });
   }
 
-  res.clearCookie("token");
+  res.clearCookie("token", cookieOptions);
 
-  res.status(201).json({
+  return res.status(200).json({
     message: "User logged out successfully",
   });
 };
 
 export const getMeController = async (req, res) => {
   const user = await UserModel.findById(req.user.id);
-  res.status(200).json({
-    message: "found user details",
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Found user details",
     user: {
       id: user._id,
       username: user.username,
