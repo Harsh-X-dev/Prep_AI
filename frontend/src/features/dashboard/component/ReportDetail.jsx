@@ -24,15 +24,7 @@ export function ReportDetail() {
     }
   }, [id, reportData]);
 if (loading) {
-  return (
-    <div className="flex h-screen flex-col items-center justify-center">
-      <Loading />
-
-      <p className="mt-4 text-center text-sm text-gray-500">
-        This may take a few minutes. Please wait...
-      </p>
-    </div>
-  );
+  return <Loading message={true} />; 
 }
   return (
     <div
