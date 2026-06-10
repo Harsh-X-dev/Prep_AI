@@ -13,4 +13,10 @@ import interviewRouter from "./routes/interview.routes.js";
 
 app.use("/api/auth", authRouter);
 app.use("/api/interview", interviewRouter);
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "Server is running",
+  });
+});
 export default app;
