@@ -42,7 +42,7 @@ export function useDash() {
         formData.append(key, value);
       });
       const res = await genrateReport(formData);
-      navigate(`/dashboard/reports/${res.data.interviewReport._id}`, {
+      navigate(`/reports/${res.data.interviewReport._id}`, {
         state: { report: res.data.interviewReport },
       });
     } catch (error) {
